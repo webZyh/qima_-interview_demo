@@ -18,8 +18,10 @@ export default class Home extends Vue {
   private howTransferredValue = '';
   private transferredValue = '';
   private showTip = false;
-  private cannotTransfer = false;
-  private canTransfer = false;
+  private canTransfer = false; // 是否能转换
+  private fromStatus = '';
+  private toStatus = '';
+  private transferFlag = true;
 
   public mounted () {
     // console.log(this.options)
@@ -40,14 +42,48 @@ export default class Home extends Vue {
 
   // 查询是否能Transfer
   public couldTransferredChange () {
-    const { couldTransferredValue } = this
-    // todo
+    this.transferFlag = true
+    this.transferredValue = ''
+    const { couldTransferredValue, currentStatus, options } = this
+    this.toStatus = couldTransferredValue
+    this.fromStatus = currentStatus
+    // 显示总开关
     this.showTip = true
-    this.cannotTransfer = true
+    // 判断是否能从fromStatus转换到toStatus
+    console.log(options)
+    const newOptionObj = options.find((item: any) => {
+      return item.label === currentStatus
+    })
+
+    if (newOptionObj.transferArr.includes(this.toStatus)) {
+      // 可以转换
+      this.canTransfer = true
+    } else {
+      this.canTransfer = false
+    }
+    console.log(newOptionObj)
   }
 
   //  查询如何Transfer
   public howTransferredChange () {
     // todo
+  }
+
+  // 转换状态
+  public transfer () {
+    this.showTip = false
+    this.couldTransferredValue = ''
+    const { transferredValue, currentStatus, options } = this
+    this.toStatus = transferredValue
+    const newOptionObj = options.find((item: any) => {
+      return item.label === currentStatus
+    })
+    if (newOptionObj.transferArr.includes(this.toStatus)) {
+      this.transferFlag = true
+      this.$store.commit('set_current_status', this.toStatus)
+      this.$message.success('success!')
+    } else {
+      this.transferFlag = false
+    }
   }
 }

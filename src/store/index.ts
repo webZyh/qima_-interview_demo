@@ -22,6 +22,16 @@ export default new Vuex.Store({
       state.statusOptions.push(obj)
     },
 
+    'update_status_option' (state: any, obj?: any) {
+      console.log(obj)
+      const { value } = obj
+      // 更新statusOptions中值为value的
+      state.statusOptions = state.statusOptions.filter((item: any) => {
+        return item.value !== value
+      })
+      state.statusOptions.push(obj)
+    },
+
     'delete_current_status' (state: any, statusName: string) {
       if (state.statusOptions.length === 0) {
         return

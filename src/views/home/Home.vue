@@ -43,9 +43,10 @@
             </el-select>
           </el-col>
         </el-row>
-        <div>
-          <span class="tip-text" v-show="showTip && cannotTransfer">No,cannot be transferred to ... </span>
-          <span class="tip-text" v-show="showTip && canTransfer">Yes,can be transferred to ... </span>
+        <div v-show="showTip">
+          <span class="tip-text" v-if="canTransfer">Yes,can be transferred to {{ toStatus }} from {{ fromStatus }} </span>
+          <span class="error-tip-text" v-else>No,cannot be transferred to {{ toStatus }} from {{ fromStatus }} </span>
+
         </div>
         <!-- How could be transferred to -->
         <el-row>
@@ -53,7 +54,7 @@
             How could be transferred to:
           </el-col>
           <el-col :span="4">
-            <el-select v-model="howTransferredValue" @click="howTransferredChange" filterable placeholder="请选择">
+            <el-select v-model="howTransferredValue" @change="howTransferredChange" filterable placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -69,7 +70,7 @@
             Transferred to:
           </el-col>
           <el-col :span="4">
-            <el-select v-model="transferredValue" filterable placeholder="请选择">
+            <el-select v-model="transferredValue" @change="transfer" filterable placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -79,6 +80,9 @@
             </el-select>
           </el-col>
         </el-row>
+        <div v-if="!transferFlag">
+          <span class="error-tip-text">cannot be transferred to {{toStatus}}</span>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -100,8 +104,10 @@
     display: flex;
   }
   .tip-text {
+    color: #67C23A;
+  }
+  .error-tip-text {
     color: red;
-    font-size: 12px;
   }
 }
 </style>

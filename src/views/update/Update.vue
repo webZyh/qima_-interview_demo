@@ -17,7 +17,8 @@
           Could be transferred to :
         </el-col>
         <el-col :span="4">
-          <el-select v-model="valueArr" multiple placeholder="Select a status">
+          <!-- todo -->
+          <el-select v-model="transferValueArr" multiple placeholder="Select a status">
             <el-option
               v-for="item in options"
               :key="item.value"
