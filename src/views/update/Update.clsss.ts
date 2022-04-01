@@ -23,11 +23,11 @@ export default class Update extends Vue {
 
   public init () {
     this.statusName = this.$route.params.id
-    const currentOption: any = this.options?.find((item: any) => {
-      return item.value === this.statusName
-    })
-    console.log(currentOption)
-    this.transferValueArr = [...currentOption.transferArr]
+    // const currentOption: any = this.options?.find((item: any) => {
+    //   return item.value === this.statusName
+    // })
+    // console.log(currentOption)
+    // this.transferValueArr = [...currentOption.transferArr]
   }
 
   public toHome () {
@@ -57,5 +57,9 @@ export default class Update extends Vue {
     this.$store.commit('update_status_option', obj)
     this.$store.commit('set_current_status', statusName)
     this.$router.push('/')
+  }
+
+  public getTransferValueArr (data: string[]) {
+    this.transferValueArr = data
   }
 }

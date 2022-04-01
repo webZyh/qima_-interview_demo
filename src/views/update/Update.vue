@@ -17,15 +17,15 @@
           Could be transferred to :
         </el-col>
         <el-col :span="4">
-          <!-- todo -->
-          <el-select v-model="transferValueArr" multiple placeholder="Select a status">
+          <AddOrUpdateTransfer :options="options" @transferChange="getTransferValueArr"></AddOrUpdateTransfer>
+          <!-- <el-select v-model="transferValueArr" multiple placeholder="Select a status">
             <el-option
               v-for="item in options"
               :key="item.value"
               :label="item.label"
               :value="item.value">
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-col>
       </el-row>
 
